@@ -14,6 +14,7 @@
 6. Restart Visual Studio Code.
 
 ## Contact me 👋
-Any issues? Feel free to hop in to Discord: <a href="https://www.discord.gg/a5g9tmdF">
+Any issues? Feel free to hop in to Discord: 
+<a href="https://www.discord.gg/a5g9tmdF">
   <img alt="Discord" title="Discord" src="https://custom-icon-badges.demolab.com/badge/-Discord-7289da?style=for-the-badge&logoColor=white&logo=discord&labelColor=40464a"/>
 </a>
