@@ -1,9 +1,50 @@
--- Battlezone 2 Engine Function Definitions for Lua Language Server
+--[[
+    Battlezone 2 ScriptUtils Function Definitions for Lua Language Server
+    Written by AI_Unit
+    Version 1.0
 
---- @class Vector
---- @field x number
---- @field y number
---- @field z number
+    All functions are defined as per the original game engine's ScriptUtils API.
+    This file is intended to be used with a Lua Language Server for code completion and type checking.
+    Note: This file does not include the actual game logic or implementation details.
+    It only provides function signatures and type definitions.
+    
+    Usage:
+    1. Load this file in your Lua Language Server.
+    2. Use the provided function signatures for code completion and type checking.
+    3. Refer to the original game documentation for detailed usage of each function.
+    4. This file is not executable on its own and requires the Battlezone 2 game engine to function.
+    5. This file is a reference and does not include any game assets or resources.
+    6. The functions are designed to be used in a Lua scripting environment.
+    7. The types defined here are aliases for the ScriptUtils functions used in the game engine.
+--]]
+
+---@alias Team integer
+---@alias Handle userdata
+---@alias Path string|Vector|Handle
+---@alias Position Vector|Matrix|Handle|string
+
+---@class Vector
+---@field x number
+---@field y number
+---@field z number
+
+---@class Matrix
+---@field right Vector
+---@field up Vector
+---@field front Vector
+---@field position Vector
+
+---@class Quaternion
+---@field s number
+---@field x number
+---@field y number
+---@field z number
+---@field w number
+---@field q Vector
+---@field qx number
+---@field qy number
+---@field qz number
+---@field qw number
 
 function InitialSetup() end
 
@@ -13,7 +54,10 @@ function Load() end
 
 function Save() end
 
----@alias Handle integer
+function Update() end
+
+function PostRun() end
+
 ---@param h Handle
 function AddObject(h) end
 
@@ -22,8 +66,6 @@ function RemoveObject(h) end
 
 ---@param h Handle
 function DeleteObject(h) end
-
-function RemoveObject() end
 
 ---@param ID integer
 ---@param Team integer
@@ -42,10 +84,6 @@ function ObjectKilled(DeadObjectHandle, KillersHandle) end
 ---@param DeadObjectHandle Handle
 ---@param KillersHandle Handle
 function ObjectSniped(DeadObjectHandle, KillersHandle) end
-
-function Update() end
-
-function Execute() end
 
 ---@param ShooterHandle Handle
 ---@param VictimHandle Handle
@@ -74,8 +112,6 @@ function PrePickupPowerup(CurWorld, Me, PowerUpHandle) end
 ---@param PreviousTarget Handle
 ---@param CurrentTarget Handle
 function PostTargetChangedCallback(Craft, PreviousTarget, CurrentTarget) end
-
-function PostRun() end
 
 ---@param Team integer
 function GetNextRandomVehicleODF(Team) end
@@ -123,21 +159,8 @@ function DotProduct(A, B) end
 ---@param B Vector
 function CrossProduct(A, B) end
 
----@param a.y any
----@param a.z any
----@param a.x any
-function SetVector(b.y, b.z, b.x) end
-
 ---@param V Vector
 function Normalize(V) end
-
----@param v.x any
----@param v.y any
----@param v.z any
-function SetVector(scale, scale, scale) end
-
----@param v.x2 any
-function sqrt(v.z2) end
 
 ---@param M Matrix
 ---@param V Vector
@@ -151,43 +174,28 @@ function Vector_Transform(M, Pos_x, Pos_y, Pos_z) end
 
 ---@param M Matrix
 ---@param V Vector
+---@overload fun(M: Matrix, Pos_x: number, Pos_y: number, Pos_z: number)
 function Vector_TransformInv(M, V) end
 
 ---@param M Matrix
----@param Pos_x number
----@param Pos_y number
----@param Pos_z number
-function Vector_TransformInv(M, Pos_x, Pos_y, Pos_z) end
-
----@param M Matrix
 ---@param V Vector
+---@overload fun(M: Matrix, Pos_x: number, Pos_y: number, Pos_z: number)
 function Vector_Rotate(M, V) end
 
 ---@param M Matrix
----@param Pos_x number
----@param Pos_y number
----@param Pos_z number
-function Vector_Rotate(M, Pos_x, Pos_y, Pos_z) end
-
----@param M Matrix
 ---@param V Vector
+---@overload fun(M: Matrix, Pos_x: number, Pos_y: number, Pos_z: number)
 function Vector_RotateInv(M, V) end
-
----@param M Matrix
----@param Pos_x number
----@param Pos_y number
----@param Pos_z number
-function Vector_RotateInv(M, Pos_x, Pos_y, Pos_z) end
 
 ---@param A Vector
 ---@param B Vector
 ---@param Mult number
 function Add_Mult_Vectors(A, B, Mult) end
 
----@param v1.x any
----@param v1.y any
----@param v1.z any
-function SetVector(Mult, Mult, Mult) end
+---@param X number
+---@param Y number
+---@param Z number
+function SetVector(X, Y, Z) end
 
 ---@param V Vector
 function Length(V) end
@@ -199,72 +207,49 @@ function LengthSquared(V) end
 ---@param B Vector
 function Distance2D(A, B) end
 
----@param (b.x any
-function sqrt(a.x) end
-
 ---@param A Vector
 ---@param B Vector
 function Distance2DSquared(A, B) end
 
 ---@param A Vector
 ---@param B Vector
-function Distance3D(A, B) end
-
----@param A Handle
----@param B Handle
+---@overload fun(A: Handle, B: Handle)
 function Distance3D(A, B) end
 
 ---@param A Vector
 ---@param B Vector
+---@overload fun(A: Handle, B: Handle)
 function Distance3DSquared(A, B) end
 
----@param A Handle
----@param B Handle
-function Distance3DSquared(A, B) end
-
----@param 1 any
----@param 0 any
----@param 0 any
----@param 0 any
----@param 1 any
----@param 0 any
----@param 0 any
----@param 0 any
----@param 1 any
----@param 0 any
----@param 0 any
----@param 0 any
-function SetMatrix(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0) end
-
----@param right Vector
----@param up Vector
----@param front Vector
+---@param Right Vector
+---@param Up Vector
+---@param Front Vector
 ---@param Position Vector
-function SetMatrix(right, up, front, Position) end
+function SetMatrix(Right, Up, Front, Position) end
 
----@param right_x number
----@param right_y number
----@param right_z number
----@param up_x number
----@param up_y number
----@param up_z number
----@param front_x number
----@param front_y number
----@param front_z number
----@param posit_x number
----@param posit_y number
----@param posit_z number
-function SetMatrix(right_x, right_y, right_z, up_x, up_y, up_z, front_x, front_y, front_z, posit_x, posit_y, posit_z) end
+---@param Right_x number
+---@param Right_y number
+---@param Right_z number
+---@param Up_x number
+---@param Up_y number
+---@param Up_z number
+---@param Front_x number
+---@param Front_y number
+---@param Front_z number
+---@param Posit_x number
+---@param Posit_y number
+---@param Posit_z number
+function SetMatrix(Right_x, Right_y, Right_z, Up_x, Up_y, Up_z, Front_x, Front_y, Front_z, Posit_x, Posit_y, Posit_z) end
 
 ---@param Angle number
 ---@param Position Vector
 function BuildAxisRotationMatrix(Angle, Position) end
 
 ---@param Angle number
----@param axis_x number
----@param axis_y number
----@param axis_z number
-function BuildAxisRotationMatrix(Angle, axis_x, axis_y, axis_z) end
+---@param Axis_x number
+---@param Axis_y number
+---@param Axis_z number
+function BuildAxisRotationMatrix(Angle, Axis_x, Axis_y, Axis_z) end
 
 ---@param Pitch number
 ---@param Yaw number
@@ -298,24 +283,14 @@ function Build_Yaw_Matrix(Angle, Position) end
 ---@param Pos_z number
 function Build_Yaw_Matrix(Angle, Pos_x, Pos_y, Pos_z) end
 
----@param A Matrix
----@param B Matrix
----@param T number
-function integererpolate_Matrix(A, B, T) end
-
 ---@param M Matrix
 function Matrix_Inverse(M) end
 
----@param s number
----@param x number
----@param y number
----@param z number
-function SetQuaternion(s, x, y, z) end
-
----@param q1 Quaternion
----@param q2 Quaternion
----@param T number
-function integererpolate_Quaternion(q1, q2, T) end
+---@param S number
+---@param X number
+---@param Y number
+---@param Z number
+function SetQuaternion(S, X, Y, Z) end
 
 ---@param q Quaternion
 function Normalize_Quaternion(q) end
@@ -336,270 +311,175 @@ function QuatPos_to_Matrix(Q, Pos) end
 ---@param Pos_z number
 function QuatPos_to_Matrix(Q, Pos_x, Pos_y, Pos_z) end
 
----@param me Handle
----@param him Handle
----@param integer any
-function Attack(me, him, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+function Attack(Me, Him, Priority) end
 
----@param me Handle
----@param him Handle
----@param integer any
-function Service(me, him, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+function Service(Me, Him, Priority) end
 
----@param me Handle
----@param him Handle
----@param integer any
-function Goto(me, him, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
+---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+function Goto(Me, Him, Priority) end
 
----@param me Handle
----@param Pos Matrix
----@param integer any
-function Goto(me, Pos, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
+---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+function Mine(Me, Him, Priority) end
 
----@param me Handle
----@param Pos Vector
----@param integer any
-function Goto(me, Pos, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+function Follow(Me, Him, Priority) end
 
----@param me Handle
+---@param Me Handle
+---@param Priority integer? 1
+function Defend(Me, Priority) end
+
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+function Defend2(Me, Him, Priority) end
+
+---@param Me Handle
+---@param Priority integer? 1
+function Stop(Me, Priority) end
+
+---@param Me Handle
 ---@param Path string
----@param integer any
----@param integer any
-function Goto(me, Path, 0, 1) end
+---@param Priority integer? 1
+function Patrol(Me, Path, Priority) end
 
----@param me Handle
----@param him Handle
----@param integer any
-function Mine(me, him, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
+---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+function Retreat(Me, Him, Priority) end
 
----@param me Handle
----@param Pos Matrix
----@param integer any
-function Mine(me, Pos, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+function GetIn(Me, Him, Priority) end
 
----@param me Handle
----@param Pos Vector
----@param integer any
-function Mine(me, Pos, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+function Pickup(Me, Him, Priority) end
 
----@param me Handle
----@param Path string
----@param integer any
----@param integer any
-function Mine(me, Path, 0, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
+---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+function Dropoff(Me, Him, Priority) end
 
----@param me Handle
----@param him Handle
----@param integer any
-function Follow(me, him, 1) end
-
----@param me Handle
----@param integer any
-function Defend(me, 1) end
-
----@param me Handle
----@param him Handle
----@param integer any
-function Defend2(me, him, 1) end
-
----@param me Handle
----@param integer any
-function Stop(me, 1) end
-
----@param me Handle
----@param Path string
----@param integer any
-function Patrol(me, Path, 1) end
-
----@param me Handle
----@param him Handle
----@param integer any
-function Retreat(me, him, 1) end
-
----@param me Handle
----@param Pos Matrix
----@param integer any
-function Retreat(me, Pos, 1) end
-
----@param me Handle
----@param Pos Vector
----@param integer any
-function Retreat(me, Pos, 1) end
-
----@param me Handle
----@param Path string
----@param integer any
----@param integer any
-function Retreat(me, Path, 0, 1) end
-
----@param me Handle
----@param him Handle
----@param integer any
-function GetIn(me, him, 1) end
-
----@param me Handle
----@param him Handle
----@param integer any
-function Pickup(me, him, 1) end
-
----@param me Handle
----@param him Handle
----@param integer any
-function Dropoff(me, him, 1) end
-
----@param me Handle
----@param Pos Matrix
----@param integer any
-function Dropoff(me, Pos, 1) end
-
----@param me Handle
----@param Pos Vector
----@param integer any
-function Dropoff(me, Pos, 1) end
-
----@param me Handle
----@param Path string
----@param integer any
----@param integer any
-function Dropoff(me, Path, 0, 1) end
-
----@param me Handle
+---@param Me Handle
 ---@param ODF string
----@param integer any
-function Build(me, ODF, 1) end
+---@param Priority integer? 1
+function Build(Me, ODF, Priority) end
 
----@param me Handle
----@param him Handle
----@param integer any
-function LookAt(me, him, 1) end
+---@param Me Handle
+---@param Him Handle
+---@param Priority integer? 1
+function LookAt(Me, Him, Priority) end
 
 ---@param Team integer
----@param him Handle
----@param integer any
-function AllLookAt(Team, him, 1) end
+---@param Him Handle
+---@param Priority integer? 1
+function AllLookAt(Team, Him, Priority) end
 
----@param me Handle
+---@param Me Handle
 ---@param Handle any
----@param boolean any
-function FireAt(me, 0, false) end
+---@param DoAim boolean
+function FireAt(Me, Handle, DoAim) end
 
----@param h Handle
+---@param H Handle
 ---@param Command integer
----@param integer any
----@param Handle any
+---@param Priority integer
+---@param Who Handle
 ---@param Where Vector
----@param Param integer/string
-function SetCommand(h, Command, 1, 0, Where, Param) end
+---@param Param integer | string
+---@overload fun(H: Handle, Command: integer, Priority: integer, Who: Handle, Where: Matrix, Param: integer | string)
+---@overload fun(H: Handle, Command: integer, Priority: integer, Who: Handle, Where: Handle, Param: integer | string)
+---@overload fun(H: Handle, Command: integer, Priority: integer, Who: Handle, Where: string, Param: integer | string)
+function SetCommand(H, Command, Priority, Who, Where, Param) end
 
----@param h Handle
----@param Command integer
----@param integer any
----@param Handle any
----@param Where Matrix
----@param Param integer/string
-function SetCommand(h, Command, 1, 0, Where, Param) end
+---@param H Handle
+function GetCurrentCommand(H) end
 
----@param h Handle
----@param Command integer
----@param integer any
----@param Handle any
----@param Where Handle
----@param Param integer/string
-function SetCommand(h, Command, 1, 0, Where, Param) end
+---@param H Handle
+function GetCurrentWho(H) end
 
----@param h Handle
----@param Command integer
----@param integer any
----@param Handle any
----@param Path string
----@param Param integer/string
-function SetCommand(h, Command, 1, 0, Path, Param) end
+---@param H Handle
+function GetCurrentCommandWhere(H) end
 
----@param h Handle
-function GetCurrentCommand(h) end
-
----@param h Handle
-function GetCurrentWho(h) end
-
----@param h Handle
-function GetCurrentCommandWhere(h) end
-
----@param filename.wav string
-function AudioMessage(filename.wav) end
+---@param FileName string
+function AudioMessage(FileName) end
 
 ---@param AudioID integer
 function IsAudioMessageDone(AudioID) end
 
-function AudioMessage() end
-
 ---@param AudioID integer
 function StopAudioMessage(AudioID) end
 
----@param filename.wav string
-function PreloadAudioMessage(filename.wav) end
+---@param FileName string
+function PreloadAudioMessage(FileName) end
 
----@param filename.wav string
-function PurgeAudioMessage(filename.wav) end
+---@param FileName string
+function PurgeAudioMessage(FileName) end
 
----@param filename.wav string
-function PreloadMusicMessage(filename.wav) end
+---@param FileName string
+function PreloadMusicMessage(FileName) end
 
----@param filename.wav string
-function PurgeMusicMessage(filename.wav) end
-
-function PurgeAudioMessage() end
+---@param FileName string
+function PurgeMusicMessage(FileName) end
 
 ---@param GroupName string
 function LoadJukeFile(GroupName) end
 
----@param integerensity integer
-function SetMusicintegerensity(integerensity) end
+---@param Intensity integer
+function SetMusicIntensity(Intensity) end
 
 ---@param Filename string
----@param Handle any
-function StartSoundEffect(Filename, 0) end
+---@param Handle Handle? 0
+function StartSoundEffect(Filename, Handle) end
 
 ---@param Filename string
----@param Handle any
-function FindSoundEffect(Filename, 0) end
+---@param Handle Handle? 0
+function FindSoundEffect(Filename, Handle) end
 
 ---@param AudioHandle integer
 function StopSoundEffect(AudioHandle) end
 
----@param filename string
+---@param Filename string
 ---@param Pos Vector
----@param integer any
----@param boolean any
-function StartAudio3D(filename, Pos, 0, false) end
+---@param AudioCategory integer
+---@param Loop boolean
+---@overload fun(Filename: string, Pos: Matrix, AudioCategory: integer, Loop: boolean)
+---@overload fun(Filename: string, X: number, Y: number, Z: number, AudioCategory: integer, Loop: boolean)
+---@overload fun(Filename: string, Pos: Handle, AudioCategory: integer, Loop: boolean)
+function StartAudio3D(Filename, Pos, AudioCategory, Loop) end
 
----@param filename string
----@param Pos Matrix
----@param integer any
----@param boolean any
-function StartAudio3D(filename, Pos, 0, false) end
-
----@param filename string
----@param X number
----@param Y number
----@param Z number
----@param integer any
----@param boolean any
-function StartAudio3D(filename, X, Y, Z, 0, false) end
-
----@param filename string
----@param h Handle
----@param integer any
----@param boolean any
----@param boolean any
-function StartAudio3D(filename, h, 0, false, false) end
-
----@param filename string
+---@param Filename string
 ---@param Volume number
 ---@param Pan number
 ---@param Rate number
----@param boolean any
----@param boolean any
-function StartAudio2D(filename, Volume, Pan, Rate, false, false) end
+---@param Loop boolean
+---@param IsMusic boolean
+function StartAudio2D(Filename, Volume, Pan, Rate, Loop, IsMusic) end
 
 ---@param AudioHandle integer
 function IsAudioPlaying(AudioHandle) end
@@ -615,8 +495,8 @@ function ResumeAudio(AudioHandle) end
 
 ---@param AudioHandle integer
 ---@param Volume number
----@param boolean any
-function SetVolume(AudioHandle, Volume, true) end
+---@param AdjustByVolumes boolean
+function SetVolume(AudioHandle, Volume, AdjustByVolumes) end
 
 ---@param AudioHandle integer
 ---@param Pan number
@@ -714,9 +594,9 @@ function IsAlly(a, b) end
 ---@param Team integer
 function GetPlan(Team) end
 
----@param filename.aip string
----@param integer any
-function SetAIP(filename.aip, 2) end
+---@param FileName string
+---@param Team Team
+function SetAIP(FileName, Team) end
 
 function ClearTeamColors() end
 
@@ -1014,8 +894,8 @@ function SetOmega(h, Omega) end
 function GetCanSnipe(h) end
 
 ---@param h Handle
----@param integer any
-function SetCanSnipe(h, -1) end
+---@param CanSnipe integer -1
+function SetCanSnipe(h, CanSnipe) end
 
 ---@param h Handle
 function GetEjectRatio(h) end
@@ -1027,52 +907,27 @@ function SetEjectRatio(h, Ratio) end
 ---@param ODF string
 ---@param Team integer
 ---@param Position Handle
-function BuildObject(ODF, Team, Position) end
-
----@param ODF string
----@param Team integer
----@param Position Matrix
----@overload BuildObject(ODF, Team, Position)
-function BuildObject(ODF, Team, Position) end
-
----@param ODF string
----@param Team integer
----@param Position Vector
-function BuildObject(ODF, Team, Position) end
-
----@param ODF string
----@param Team integer
----@param Path string
 ---@param Point integer 0
-function BuildObject(ODF, Team, Path, Point) end
+---@overload fun(ODF: string, Team: integer, Position: Matrix)
+---@overload fun(ODF: string, Team: integer, Position: Vector)
+---@overload fun(ODF: string, Team: integer, Position: string)
+function BuildObject(ODF, Team, Position, Point) end
 
 ---@param h Handle
 function RemoveObject(h) end
 
 ---@param h Handle
+---@overload fun(Path: string, Point: integer)
 function GetPosition(h) end
-
----@param Path string
----@param integer any
-function GetPosition(Path, 0) end
 
 ---@param h Handle
 function GetPosition2(h) end
 
 ---@param h Handle
 ---@param pos Vector
+---@overload fun(h: Handle, h: Handle)
+---@overload fun(h: Handle, Path: string, Point: integer)
 function SetPosition(h, pos) end
-
----@param h Handle
----@param h Handle
-function SetPosition(h, h) end
-
----@param h Handle
----@param Path string
----@param integer any
-function SetPosition(h, Path, 0) end
-
-function SetTransform() end
 
 ---@param h Handle
 function IsPlayer(h) end
@@ -1081,23 +936,15 @@ function IsPlayer(h) end
 function GetNearestObject(h) end
 
 ---@param h Handle
+---@overload fun(Path: string, Point: integer)
 function GetNearestVehicle(h) end
-
----@param Path string
----@param integer any
-function GetNearestVehicle(Path, 0) end
 
 ---@param h Handle
 function GetNearestBuilding(h) end
 
 ---@param h Handle
+---@overload fun(h: Handle, ignorePilots: boolean, ignoreScavs: boolean, maxDist : integer)
 function GetNearestEnemy(h) end
-
----@param h Handle
----@param ignorePilots boolean
----@param ignoreScavs boolean
----@param number any
-function GetNearestEnemy(h, ignorePilots, ignoreScavs, 450.0) end
 
 ---@param h Handle
 function GetRace(h) end
@@ -1114,8 +961,6 @@ function IsAliveAndPilot(h) end
 ---@param h Handle
 function IsNotDeadAndPilot(h) end
 
-function IsAliveAndPilot() end
-
 ---@param h Handle
 function IsFlying(h) end
 
@@ -1123,11 +968,8 @@ function IsFlying(h) end
 function IsPowered(h) end
 
 ---@param h Handle
+---@overload fun(h: Handle, MaxHeight: number)
 function InBuilding(h) end
-
----@param h Handle
----@param MaxHeight number
-function InBuilding(h, MaxHeight) end
 
 ---@param h Handle
 function AtTerminal(h) end
@@ -1138,14 +980,10 @@ function GetFront(h) end
 ---@param h Handle
 function GetLookFront(h) end
 
----@param me handle
+---@param me Handle
 ---@param Amount number
+---@overload fun(me: Handle, him: Handle, Amount: number)
 function Damage(me, Amount) end
-
----@param me handle
----@param him Handle
----@param Amount number
-function Damage(me, him, Amount) end
 
 ---@param h Handle
 function AddPilotByHandle(h) end
@@ -1158,19 +996,12 @@ function HoppedOutOf(h) end
 
 ---@param h Handle
 ---@param Weapon string
+---@overload fun(h: Handle, Weapon: string, Slot: integer)
 function GiveWeapon(h, Weapon) end
 
----@param h Handle
----@param Weapon string
----@param Slot integer
-function GiveWeapon(h, Weapon, Slot) end
-
 ---@param me Handle
+---@overload fun(me: Handle, him: Handle)
 function IsFollowing(me) end
-
----@param me Handle
----@param him Handle
-function IsFollowing(me, him) end
 
 ---@param h Handle
 function WhoFollowing(h) end
@@ -1214,20 +1045,11 @@ function CountThreats(h) end
 ---@param ODF string
 ---@param Team integer
 ---@param Path string
+---@overload fun(Group: integer, Count: integer, ODF: string, Team: integer, Start: Handle, Finish: Handle)
 function SpawnBirds(Group, Count, ODF, Team, Path) end
 
 ---@param Group integer
----@param Count integer
----@param ODF string
----@param Team integer
----@param Start Handle
----@param Finish Handle
-function SpawnBirds(Group, Count, ODF, Team, Start, Finish) end
-
----@param Group integer
 function RemoveBirds(Group) end
-
-function SpawnBirds() end
 
 ---@param h Handle
 function SetRandomHeadingAngle(h) end
@@ -1243,17 +1065,12 @@ function GetTug(Cargo) end
 function HasCargo(Tug) end
 
 ---@param SequenceNumber integer
+---@overload fun(Label: string)
 function GetHandle(SequenceNumber) end
 
----@param Label string
-function GetHandle(Label) end
-
 ---@param Slot integer
+---@overload fun(Team: integer, Slot: string)
 function GetObjectByTeamSlot(Slot) end
-
----@param Team integer
----@param Slot integer
-function GetObjectByTeamSlot(Team, Slot) end
 
 function GetAllGameObjectHandles() end
 
@@ -1292,7 +1109,7 @@ function EjectPilot(h) end
 function HopOut(h) end
 
 ---@param h Handle
----@param Controls Table
+---@param Controls table
 function SetControls(h, Controls) end
 
 ---@param h Handle
@@ -1325,14 +1142,14 @@ function GetLifeSpan(h) end
 function SetLifespan(h, Time) end
 
 ---@param h Handle
----@param IgnoreSpanwpointegers boolean
----@param number any
-function GetNearestPowerup(h, IgnoreSpanwpointegers, 450.0) end
+---@param IgnoreSpawnpoints boolean
+---@param MaxDist number
+function GetNearestPowerup(h, IgnoreSpawnpoints, MaxDist) end
 
 ---@param h Handle
 ---@param skipFriendlies boolean
----@param number any
-function GetNearestPerson(h, skipFriendlies, 450.0) end
+---@param MaxDist number
+function GetNearestPerson(h, skipFriendlies, MaxDist) end
 
 ---@param h1 Handle
 ---@param h2 Handle
@@ -1361,16 +1178,16 @@ function GetClassSig(h) end
 function GetClassLabel(h) end
 
 ---@param h Handle
----@param Slot any
-function GetWeaponConfig(h, 0) end
+---@param Slot integer 0
+function GetWeaponConfig(h, Slot) end
 
 ---@param h Handle
----@param integer any
-function GetWeaponODF(h, 0) end
+---@param Slot integer 0
+function GetWeaponODF(h, Slot) end
 
 ---@param h Handle
----@param integer any
-function GetWeaponGOClass(h, 0) end
+---@param Slot integer 0
+function GetWeaponGOClass(h, Slot) end
 
 ---@param h1 Handle
 ---@param h2 Handle
@@ -1387,19 +1204,14 @@ function GetActualScrapCost(h) end
 
 ---@param h Handle
 ---@param LastMatrix Matrix
----@param Matrix any
-function SetLastCurrentPosition(h, LastMatrix, nil) end
+---@param CurMatrix Matrix
+function SetLastCurrentPosition(h, LastMatrix, CurMatrix) end
 
 ---@param h Handle
----@param Vector any
----@param Vector any
-function SetintegererpolablePosition(h, nil, nil) end
-
----@param h Handle
----@param Matrix any
----@param Matrix any
----@param boolean any
-function SetintegererpolablePosition(h, nil, nil, true) end
+---@param TruePos Vector
+---@param LastPos Vector
+---@overload fun(h: Handle, TrueMat: Matrix, LastMat: Matrix, SetPosition: boolean)
+function SetintegererpolablePosition(h, TruePos, LastPos) end
 
 ---@param h Handle
 function CanBuild(h) end
@@ -1411,8 +1223,8 @@ function IsBusy(h) end
 function GetBuildClass(h) end
 
 ---@param h Handle
----@param integer any
-function GetQueuedItem(h, 0) end
+---@param Index integer
+function GetQueuedItem(h, Index) end
 
 ---@param h Handle
 ---@param Mask integer
@@ -1449,8 +1261,8 @@ function GetAnimationFrame(h, Name) end
 function PauseAnimation(h) end
 
 ---@param h Handle
----@param integer any
-function ResumeAnimation(h, 1) end
+---@param Direction integer
+function ResumeAnimation(h, Direction) end
 
 ---@param h Handle
 function GetAnimationDirection(h) end
@@ -1458,30 +1270,24 @@ function GetAnimationDirection(h) end
 ---@param h Handle
 ---@param TurnSpeed number
 ---@param Time number
+---@overload fun(h: Handle, TurnSpeed: number, MoveSpeed: number, Dest: Vector)
 function Move(h, TurnSpeed, Time) end
 
 ---@param h Handle
----@param TurnSpeed number
----@param MoveSpeed number
----@param Dest Vector
-function Move(h, TurnSpeed, MoveSpeed, Dest) end
-
----@param h Handle
----@param string any
----@param integer any
----@param number any
----@param integer any
----@param boolean any
----@param integer any
----@param integer any
----@param boolean any
----@param integer any
----@param integer any
----@param Handle any
----@param Vector any
----@param 0 any
----@param 0 any
-function ReplaceObject(h, nil, -1, 0.0, -1, true, -1, -1, true, -1, 0, 0, (0, 0, 0) end
+---@param ODF string nil
+---@param Team integer -1
+---@param HeightOffset number 0.0
+---@param Empty integer -1
+---@param restoreWeapons boolean true
+---@param Group integer -1
+---@param CanSnipe integer -1
+---@param KeepCmd boolean true
+---@param NewCmd integer -1
+---@param NewPriority 0
+---@param NewWho Handle
+---@param NewWhere Vector
+function ReplaceObject(h, ODF, Team, HeightOffset, Empty, restoreWeapons, Group, CanSnipe, KeepCmd, NewCmd, NewPriority,
+                       NewWho, NewWhere) end
 
 ---@param h Handle
 function CanCommand(h) end
@@ -1519,14 +1325,8 @@ function PanDone() end
 ---@param Object Handle
 ---@param Offset Vector
 ---@param Target Handle
+---@overload fun(Object: Handle, X: number, Y: number, Z: number, Target: Handle)
 function CameraObject(Object, Offset, Target) end
-
----@param Object Handle
----@param X number
----@param Y number
----@param Z number
----@param Target Handle
-function CameraObject(Object, X, Y, Z, Target) end
 
 ---@param me Handle
 ---@param offset Vector
@@ -1548,19 +1348,16 @@ function StopMovie() end
 function PlayMove() end
 
 ---@param Name string
+---@overload fun(Name: string, UpdateCam: boolean)
 function PlayRecording(Name) end
-
----@param Name string
----@param UpdateCam boolean
-function PlayRecording(Name, UpdateCam) end
 
 ---@param Name string
 function PlaybackVehicle(Name) end
 
 ---@param Time number
----@param number any
----@param number any
-function StartCockpitTimer(Time, --2147483647, -2147483647) end
+---@param Warn number? -2147483647
+---@param Alert number? -2147483647
+function StartCockpitTimer(Time, Warn, Alert) end
 
 ---@param Time number
 ---@param Warn number
@@ -1590,12 +1387,8 @@ function ClearObjectives() end
 
 ---@param Text string
 ---@param Color integer
----@param Time integer
-function AddObjective(Text, Color, Time) end
-
----@param Text string
----@param Color string
----@param Time integer
+---@param Time integer? 10
+---@overload fun(Text: string, Color: string, Time: integer?)
 function AddObjective(Text, Color, Time) end
 
 ---@param h Handle
@@ -1615,12 +1408,9 @@ function GetCVarIteminteger(Team, Index) end
 ---@param Index integer
 function GetCVarItemStr(Team, Index) end
 
----@param filename.cfg string
-function IFace_Exec(filename.cfg) end
-
----@param filename.cfg string
----@param MenuScale boolean
-function IFace_Exec(filename.cfg, MenuScale) end
+---@param FileName string
+---@overload fun(FileName: string, MenuScale: boolean)
+function IFace_Exec(FileName) end
 
 ---@param Name string
 function IFace_Activate(Name) end
@@ -1644,19 +1434,19 @@ function IFace_GetString(Name) end
 
 ---@param Name string
 ---@param Value integer
-function IFace_Createintegereger(Name, Value) end
+function IFace_CreateInteger(Name, Value) end
 
 ---@param Name string
 ---@param Value string
-function IFace_Setintegereger(Name, Value) end
+function IFace_SetInteger(Name, Value) end
 
 ---@param Name string
-function IFace_Getintegereger(Name) end
+function IFace_GetInteger(Name) end
 
 ---@param Name string
 ---@param Min integer
 ---@param Max integer
-function IFace_SetintegeregerRange(Name, Min, Max) end
+function IFace_SetIntegerRange(Name, Min, Max) end
 
 ---@param Name string
 ---@param Value number
@@ -1680,8 +1470,8 @@ function IFace_AddTextItem(Name, Value) end
 function IFace_GetSelectedItem(Name) end
 
 ---@param Cmd string
----@param boolean any
-function IFace_ConsoleCmd(Cmd, true) end
+---@param SquelchOutput boolean true
+function IFace_ConsoleCmd(Cmd, SquelchOutput) end
 
 function IFace_EnterMenuMode() end
 
@@ -1740,8 +1530,8 @@ function GetLastAlliedTeam(Team) end
 function GetTeamplayRanges(Team) end
 
 ---@param Team integer
----@param integer any
-function GetPlayerODF(Team, 0) end
+---@param RandomizeType integer
+function GetPlayerODF(Team, RandomizeType) end
 
 ---@param h Handle
 ---@param ODF string
@@ -1750,21 +1540,19 @@ function GetPlayerODF(Team, 0) end
 ---@param MaxRadius number
 function BuildEmptyCraftNear(h, ODF, Team, MinRadius, MaxRadius) end
 
-function GetPlayerODF() end
-
-function GetSafestSpawnpointeger() end
+function GetSafestSpawnpoint() end
 
 ---@param Team integer
-function GetSpawnpointeger(Team) end
+function GetSpawnpoint(Team) end
 
 ---@param Team integer
-function GetSpawnpointegerHandle(Team) end
+function GetSpawnpointHandle(Team) end
 
----@param integer any
-function GetRandomSpawnpointeger(-1) end
+---@param Team integer -1
+function GetRandomSpawnpoint(Team) end
 
----@param integer any
-function GetAllSpawnpointegers(0) end
+---@param Team integer? 0
+function GetAllSpawnpoints(Team) end
 
 ---@param Text string
 function SetTimerBox(Text) end
@@ -1846,13 +1634,13 @@ function NoteGameoverWithCustomMessage(Message) end
 function DoGameover(Time) end
 
 ---@param TeamGroup integer
----@param Race char
+---@param Race string
 function SetMPTeamRace(TeamGroup, Race) end
 
 ---@param h Handle
 ---@param Reason string
----@param boolean any
-function KickPlayer(h, Reason, false) end
+---@param Ban boolean false
+function KickPlayer(h, Reason, Ban) end
 
 ---@param NetworkListType integer
 ---@param Index integer
@@ -1862,20 +1650,18 @@ function GetNetworkListItem(NetworkListType, Index) end
 function GetNetworkListCount(NetworkListType) end
 
 ---@param Time number
----@param debrief.txt string
-function FailMission(Time, debrief.txt) end
+---@param Debrief string
+function FailMission(Time, Debrief) end
 
 ---@param Time number
----@param debrief.txt string
-function SucceedMission(Time, debrief.txt) end
+---@param Debrief string
+function SucceedMission(Time, Debrief) end
 
 function ChangeSide() end
 
 ---@param h Handle
+---@overload fun(ODF: string)
 function IsInfo(h) end
-
----@param ODF string
-function IsInfo(ODF) end
 
 ---@param h Handle
 function IsSelected(h) end
@@ -1883,11 +1669,7 @@ function IsSelected(h) end
 ---@param Ratio number
 ---@param Rate number
 ---@param Color string
-function SetColorFade(Ratio, Rate, Color) end
-
----@param Ratio number
----@param Rate number
----@param Color integer
+---@overload fun(Ratio: number, Rate: number, Color: integer)
 function SetColorFade(Ratio, Rate, Color) end
 
 function StopCheats() end
@@ -1897,15 +1679,13 @@ function GetLocalUserInspectHandle() end
 function GetLocalUserSelectHandle() end
 
 ---@param string any
-function Printeger(string) end
+function Print(string) end
 
 ---@param string any
-function PrintegerConsoleMessage(string) end
+function PrintConsoleMessage(string) end
 
 ---@param string any
 function CalcCRC(string) end
-
-function SetCommand() end
 
 ---@param Red integer
 ---@param Green integer
@@ -1919,15 +1699,8 @@ function Make_RGB(Red, Green, Blue) end
 function Make_RGBA(Red, Green, Blue, Alpha) end
 
 ---@param Key string
+---@overload fun(Prefix: string, Key: string)
 function TranslateString(Key) end
-
----@param Prefix string
----@param Key string
-function TranslateString(Prefix, Key) end
-
----@param "odf" any
----@param "Unknown" any
-function TranslateString("odf", "Unknown") end
 
 function PlayerEjected() end
 
@@ -1935,8 +1708,8 @@ function ObjectKilled() end
 
 function ObjectSniped() end
 
----@param boolean any
-function SetAutoGroupUnits(true) end
+---@param autoGroup boolean false
+function SetAutoGroupUnits(autoGroup) end
 
 function EnableHighTPS() end
 
@@ -1950,20 +1723,10 @@ function GetTime() end
 
 ---@param h1 Handle
 ---@param h2 Handle
+---@overload fun(h1: Handle, Pos: Matrix)
+---@overload fun(h1: Handle, Pos: Vector)
+---@overload fun(h1: Handle, Path: string, Point: integer)
 function GetDistance(h1, h2) end
-
----@param h1 Handle
----@param Pos Matrix
-function GetDistance(h1, Pos) end
-
----@param h1 Handle
----@param pos Vector
-function GetDistance(h1, pos) end
-
----@param h1 Handle
----@param Path string
----@param integer any
-function GetDistance(h1, Path, 0) end
 
 function GetAiPaths() end
 
@@ -1980,34 +1743,20 @@ function SetPathRoundTrip(Path) end
 ---@param Path string
 function SetPathLoop(Path) end
 
-function SetPathType() end
-
 ---@param Path string
 function GetPathPointegers(Path) end
 
 ---@param Path string
 ---@param Pos Vector
+---@overload fun(Path: string, Pos: Matrix)
+---@overload fun(Path: string, h: Handle)
 function IsInsideArea(Path, Pos) end
-
----@param Path string
----@param Pos Matrix
-function IsInsideArea(Path, Pos) end
-
----@param Path string
----@param h Handle
-function IsInsideArea(Path, h) end
 
 ---@param Path string
 ---@param Pos Vector
+---@overload fun(Path: string, Pos: Matrix)
+---@overload fun(Path: string, h: Handle)
 function GetWindingNumber(Path, Pos) end
-
----@param Path string
----@param Pos Matrix
-function GetWindingNumber(Path, Pos) end
-
----@param Path string
----@param h Handle
-function GetWindingNumber(Path, h) end
 
 ---@param Magnitude number
 function StartEarthQuake(Magnitude) end
@@ -2017,91 +1766,45 @@ function UpdateEarthQuake(Magnitude) end
 
 function StopEarthquake() end
 
----@param number any
-function SetGravity(12.5) end
+---@param Gravity number 12.5
+function SetGravity(Gravity) end
 
 ---@param ODF string
 function PreloadODF(ODF) end
 
 ---@param Pos Matrix
+---@overload fun(Pos: Vector)
+---@overload fun(Pos: Handle)
+---@overload fun(Pos: string, Point: integer)
+---@overload fun(X: number, Z: number)
 function TerrainFindFloor(Pos) end
 
 ---@param Pos Vector
-function TerrainFindFloor(Pos) end
-
----@param h Handle
-function TerrainFindFloor(h) end
-
----@param Path string
----@param integer any
-function TerrainFindFloor(Path, 0) end
-
----@param X number
----@param Z number
-function TerrainFindFloor(X, Z) end
-
----@param Pos Vector
+---@overload fun(Pos: Matrix)
+---@overload fun(Pos: Handle)
+---@overload fun(Pos: string, Point: integer)
+---@overload fun(X: number, Z: number)
 function TerrainIsWater(Pos) end
 
----@param Pos Matrix
-function TerrainIsWater(Pos) end
-
----@param h Handle
-function TerrainIsWater(h) end
-
----@param Path string
----@param integer any
-function TerrainIsWater(Path, 0) end
-
----@param X number
----@param Z number
-function TerrainIsWater(X, Z) end
-
 ---@param Pos Vector
----@param boolean any
-function GetTerrainHeightAndNormal(Pos, false) end
-
----@param Pos Matrix
----@param boolean any
-function GetTerrainHeightAndNormal(Pos, false) end
-
----@param h Handle
----@param boolean any
-function GetTerrainHeightAndNormal(h, false) end
+---@param UseWater boolean false
+---@overload fun(Pos: Matrix, UseWater: boolean)
+---@overload fun(Pos: Handle, UseWater: boolean)
+---@overload fun(Path: string, Point: integer, UseWater: boolean)
+---@overload fun(X: number, Z: number)
+function GetTerrainHeightAndNormal(Pos, UseWater) end
 
 ---@param Path string
----@param integer any
----@param boolean any
-function GetTerrainHeightAndNormal(Path, 0, false) end
-
----@param Path string
+---@overload fun(h1: Handle, h2: Handle, Radius: number)
 function CalcCliffs(Path) end
 
----@param h1 Handle
----@param h2 Handle
----@param Radius number
-function CalcCliffs(h1, h2, Radius) end
-
 ---@param Pos Matrix
 ---@param MinRadius number
 ---@param MaxRadius number
+---@overload fun(Pos: Vector, MinRadius: number, MaxRadius: number)
+---@overload fun(Pos: Handle, MinRadius: number, MaxRadius: number)
+---@overload fun(Path: string, Pointeger: integer, MinRadius: number, MaxRadius: number)
 function GetPositionNear(Pos, MinRadius, MaxRadius) end
-
----@param Pos Vector
----@param MinRadius number
----@param MaxRadius number
-function GetPositionNear(Pos, MinRadius, MaxRadius) end
-
----@param Pos Handle
----@param MinRadius number
----@param MaxRadius number
-function GetPositionNear(Pos, MinRadius, MaxRadius) end
-
----@param Path string
----@param Pointeger integer
----@param MinRadius number
----@param MaxRadius number
-function GetPositionNear(Path, Pointeger, MinRadius, MaxRadius) end
 
 ---@param Pos Vector
 ---@param Radius number
@@ -2137,131 +1840,77 @@ function SetTauntCPUTeamName(Name) end
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFHexinteger(File, Block, Name, 0) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFHexinteger(h, Block, Name, 0) end
+---@param DefaultValue number? 0
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: number)
+function GetODFHexInt(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFinteger(File, Block, Name, 0) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFinteger(h, Block, Name, 0) end
+---@param DefaultValue number? 0
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: number)
+function GetODFInt(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFLong(File, Block, Name, 0) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFLong(h, Block, Name, 0) end
+---@param DefaultValue number? 0
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: number)
+function GetODFLong(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFFloat(File, Block, Name, 0.0) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFFloat(h, Block, Name, 0.0) end
+---@param DefaultValue number 0.0
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: number)
+function GetODFFloat(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFDouble(File, Block, Name, 0.0) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFDouble(h, Block, Name, 0.0) end
+---@param DefaultValue number? 0.0
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: number)
+function GetODFDouble(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFBoolean(File, Block, Name, false) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFBoolean(h, Block, Name, false) end
+---@param DefaultValue boolean? false
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: boolean)
+function GetODFBoolean(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFChar(File, Block, Name, "") end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFChar(h, Block, Name, "") end
+---@param DefaultValue string? ''
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: string)
+function GetODFChar(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFString(File, Block, Name, nil) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFString(h, Block, Name, nil) end
+---@param DefaultValue string? ''
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: string)
+function GetODFString(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
-function GetODFColor(File, Block, Name, 0) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
-function GetODFColor(h, Block, Name, 0) end
+---@param DefaultValue number? 0.0
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: number)
+function GetODFColor(File, Block, Name, DefaultValue) end
 
 ---@param File string
 ---@param Block string
 ---@param Name string
----@param DefaultValue any
----@param 0 any
----@param 0 any
-function GetODFVector(File, Block, Name, (0, 0, 0) end
-
----@param h Handle
----@param Block string
----@param Name string
----@param DefaultValue any
----@param 0 any
----@param 0 any
-function GetODFVector(h, Block, Name, (0, 0, 0) end
+---@param DefaultValue Vector? (0, 0, 0)
+---@overload fun(h: Handle, Block: string, Name: string, DefaultValue: Vector)
+function GetODFVector(File, Block, Name, DefaultValue) end
 
 ---@param Filename string
 function LoadFile(Filename) end
 
 ---@param Filename string
 ---@param Text string
----@param boolean any
-function WriteToFile(Filename, Text, true) end
+---@param Append any
+function WriteToFile(Filename, Text, Append) end
