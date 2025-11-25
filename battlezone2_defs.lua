@@ -606,13 +606,8 @@ function TeamplayTeamColors() end
 
 ---@param Team integer
 ---@param Color Vector
+---@overload fun(Team: integer, Red: integer, Green: integer, Blue: integer)
 function SetTeamColor(Team, Color) end
-
----@param Team integer
----@param Red integer
----@param Green integer
----@param Blue integer
-function SetTeamColor(Team, Red, Green, Blue) end
 
 ---@param Team integer
 function ClearTeamColor(Team) end
