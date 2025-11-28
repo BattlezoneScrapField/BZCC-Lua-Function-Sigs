@@ -1073,7 +1073,7 @@ function HasCargo(Tug) end
 function GetHandle(SequenceNumber) error("This function is provided by the engine.") end
 
 ---@param Slot integer
----@overload fun(Team: integer, Slot: string)
+---@overload fun(Team: integer, Slot: integer)
 function GetObjectByTeamSlot(Slot) end
 
 function GetAllGameObjectHandles() end
@@ -1657,6 +1657,7 @@ function GetNetworkListCount(NetworkListType) end
 
 ---@param Time number
 ---@param Debrief string
+---@overload fun(Time)
 function FailMission(Time, Debrief) end
 
 ---@param Time number
@@ -1826,10 +1827,8 @@ function GetLocalPlayerTeamNumber() error("This function is provided by the engi
 ---@param ODF string
 function DoesODFExist(ODF) end
 
+---@overload fun(filename: string)
 function DoesFileExist() end
-
----@param filename string
-function DoesFileExist(filename) end
 
 function PetWatchdogThread() end
 
