@@ -7,7 +7,7 @@
     This file is intended to be used with a Lua Language Server for code completion and type checking.
     Note: This file does not include the actual game logic or implementation details.
     It only provides function signatures and type definitions.
-    
+
     Usage:
     1. Load this file in your Lua Language Server.
     2. Use the provided function signatures for code completion and type checking.
@@ -22,6 +22,7 @@
 ---@alias Handle userdata
 ---@alias Path string|Vector|Handle
 ---@alias Position Vector|Matrix|Handle|string
+---@alias AudioMessage integer
 
 ---@class Vector
 ---@field x number
@@ -123,11 +124,9 @@ function ProcessCommand(CRC) end
 function SetRandomSeed(Seed) end
 
 ---@param Max number
-function GetRandomFloat(Max) end
-
----@param Min number
----@param Max number
-function GetRandomFloat(Min, Max) end
+---@return number
+---@overload fun(Min: number, Max: number)
+function GetRandomFloat(Max) error("This function is provided by the engine.") end
 
 ---@param V Vector
 function FrontToRadian(V) end
@@ -270,8 +269,9 @@ function BuildPositionRotationMatrix(Pitch, Yaw, Roll, Pos_X, Pos_y, Pos_z) end
 function BuildOrthogonalMatrix(Axis, Heading) end
 
 ---@param Position Vector
----@param Direction Vector
-function BuildDirectionalMatrix(Position, Direction) end
+---@param Direction? Vector
+---@return Matrix
+function BuildDirectionalMatrix(Position, Direction) error("This function is provided by the engine.") end
 
 ---@param Angle number
 ---@param Position Vector
@@ -326,7 +326,7 @@ function Service(Me, Him, Priority) end
 ---@param Priority integer? 1
 ---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
 ---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
----@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point?: integer, Priority?: integer)
 function Goto(Me, Him, Priority) end
 
 ---@param Me Handle
@@ -334,7 +334,7 @@ function Goto(Me, Him, Priority) end
 ---@param Priority integer? 1
 ---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
 ---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
----@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point?: integer, Priority?: integer)
 function Mine(Me, Him, Priority) end
 
 ---@param Me Handle
@@ -365,7 +365,7 @@ function Patrol(Me, Path, Priority) end
 ---@param Priority integer? 1
 ---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
 ---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
----@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point?: integer, Priority?: integer)
 function Retreat(Me, Him, Priority) end
 
 ---@param Me Handle
@@ -383,7 +383,7 @@ function Pickup(Me, Him, Priority) end
 ---@param Priority integer? 1
 ---@overload fun(Me: Handle, Pos: Matrix, Priority: integer)
 ---@overload fun(Me: Handle, Pos: Vector, Priority: integer)
----@overload fun(Me: Handle, Path: string, Point: integer, Priority: integer)
+---@overload fun(Me: Handle, Path: string, Point?: integer, Priority?: integer)
 function Dropoff(Me, Him, Priority) end
 
 ---@param Me Handle
@@ -421,7 +421,8 @@ function SetCommand(H, Command, Priority, Who, Where, Param) end
 function GetCurrentCommand(H) end
 
 ---@param H Handle
-function GetCurrentWho(H) end
+---@return Handle
+function GetCurrentWho(H) error("This function is provided by the engine.") end
 
 ---@param H Handle
 function GetCurrentCommandWhere(H) end
@@ -512,15 +513,17 @@ function GetAudioFileDuration(AudioHandle) end
 ---@param AudioHandle integer
 function IsPlayingLooped(AudioHandle) end
 
----@param Team integer?
-function GetPlayerHandle(Team) end
+---@param Team? integer
+---@return Handle
+function GetPlayerHandle(Team) error("This function is provided by the engine.") end
 
 ---@param h Handle
 ---@param Team integer
 function SetAsUser(h, Team) end
 
 ---@param Team integer
-function GetRaceOfTeam(Team) end
+---@return string
+function GetRaceOfTeam(Team) error("This function is provided by the engine.") end
 
 ---@param Team integer
 ---@param Value integer
@@ -606,13 +609,8 @@ function TeamplayTeamColors() end
 
 ---@param Team integer
 ---@param Color Vector
+---@overload fun(Team: integer, Red: integer, Green: integer, Blue: integer)
 function SetTeamColor(Team, Color) end
-
----@param Team integer
----@param Red integer
----@param Green integer
----@param Blue integer
-function SetTeamColor(Team, Red, Green, Blue) end
 
 ---@param Team integer
 function ClearTeamColor(Team) end
@@ -688,7 +686,8 @@ function SetTransform(h, h2) end
 function SetTransform(h, Path) end
 
 ---@param h Handle
-function GetTeamNum(h) end
+---@return integer
+function GetTeamNum(h) error("This function is provided by the engine.") end
 
 ---@param h Handle
 ---@param Team integer
@@ -769,7 +768,8 @@ function GetVelocity(h) end
 function SetVelocity(h, velocity) end
 
 ---@param h Handle
-function GetWhoShotMe(h) end
+---@return Handle
+function GetWhoShotMe(h) error("This function is provided by the engine.") end
 
 ---@param h Handle
 function GetLastEnemyShot(h) end
@@ -908,16 +908,18 @@ function SetEjectRatio(h, Ratio) end
 ---@param Team integer
 ---@param Position Handle
 ---@param Point integer 0
+---@return Handle
 ---@overload fun(ODF: string, Team: integer, Position: Matrix)
 ---@overload fun(ODF: string, Team: integer, Position: Vector)
 ---@overload fun(ODF: string, Team: integer, Position: string)
-function BuildObject(ODF, Team, Position, Point) end
+function BuildObject(ODF, Team, Position, Point) error("This function is provided by the engine.") end
 
 ---@param h Handle
 function RemoveObject(h) end
 
 ---@param h Handle
----@overload fun(Path: string, Point: integer)
+---@overload fun(Path: string, Point?: integer)
+---@return Vector
 function GetPosition(h) end
 
 ---@param h Handle
@@ -1059,14 +1061,16 @@ function SetRandomHeadingAngle(h) end
 function SetAngle(h, Degrees) end
 
 ---@param Cargo Handle
-function GetTug(Cargo) end
+---@return Handle
+function GetTug(Cargo) error("This function is provided by the engine.") end
 
 ---@param Tug Handle
 function HasCargo(Tug) end
 
 ---@param SequenceNumber integer
----@overload fun(Label: string)
-function GetHandle(SequenceNumber) end
+---@overload fun(Label: string) : Handle
+---@return Handle
+function GetHandle(SequenceNumber) error("This function is provided by the engine.") end
 
 ---@param Slot integer
 ---@overload fun(Team: integer, Slot: string)
@@ -1275,19 +1279,22 @@ function Move(h, TurnSpeed, Time) end
 
 ---@param h Handle
 ---@param ODF string nil
----@param Team integer -1
----@param HeightOffset number 0.0
----@param Empty integer -1
----@param restoreWeapons boolean true
----@param Group integer -1
----@param CanSnipe integer -1
----@param KeepCmd boolean true
----@param NewCmd integer -1
----@param NewPriority 0
----@param NewWho Handle
----@param NewWhere Vector
+---@param Team? integer -1
+---@param HeightOffset? number 0.0
+---@param Empty? integer -1
+---@param restoreWeapons? boolean true
+---@param Group? integer -1
+---@param CanSnipe? integer -1
+---@param KeepCmd? boolean true
+---@param NewCmd? integer -1
+---@param NewPriority? 0
+---@param NewWho? Handle
+---@param NewWhere? Vector
+---@return Handle
 function ReplaceObject(h, ODF, Team, HeightOffset, Empty, restoreWeapons, Group, CanSnipe, KeepCmd, NewCmd, NewPriority,
-                       NewWho, NewWhere) end
+                       NewWho, NewWhere)
+    error("This function is provided by the engine.")
+end
 
 ---@param h Handle
 function CanCommand(h) end
@@ -1398,11 +1405,11 @@ function GetPlayerName(h) end
 function GetVarItemStr(VarName) end
 
 ---@param VarName string
-function GetVarIteminteger(VarName) end
+function GetVarItemInt(VarName) end
 
 ---@param Team integer
 ---@param Index integer
-function GetCVarIteminteger(Team, Index) end
+function GetCVarItemInt(Team, Index) end
 
 ---@param Team integer
 ---@param Index integer
@@ -1558,11 +1565,8 @@ function GetAllSpawnpoints(Team) end
 function SetTimerBox(Text) end
 
 ---@param Text string
+---@overload fun(Text: string, Color: integer)
 function AddToMessagesBox(Text) end
-
----@param Text string
----@param Color integer
-function AddToMessagesBox(Text, Color) end
 
 ---@param h Handle
 function GetDeaths(h) end
@@ -1588,10 +1592,12 @@ function SetScore(h) end
 function AddDeaths(h, Value) end
 
 ---@param h Handle
-function AddKills(h) end
+---@param Value integer
+function AddKills(h, Value) end
 
 ---@param h Handle
-function AddScore(h) end
+---@param Value integer
+function AddScore(h, Value) end
 
 function GetLocalPlayerDPID() end
 
@@ -1700,7 +1706,8 @@ function Make_RGBA(Red, Green, Blue, Alpha) end
 
 ---@param Key string
 ---@overload fun(Prefix: string, Key: string)
-function TranslateString(Key) end
+---@return string
+function TranslateString(Key) error("This function is provided by the engine.") end
 
 function PlayerEjected() end
 
@@ -1719,7 +1726,8 @@ function GetMapTRNFilename() end
 
 function GetMissionFilename() end
 
-function GetTime() end
+---@return integer
+function GetTime() error("This function is provided by the engine.") end
 
 ---@param h1 Handle
 ---@param h2 Handle
@@ -1801,6 +1809,7 @@ function CalcCliffs(Path) end
 ---@param Pos Matrix
 ---@param MinRadius number
 ---@param MaxRadius number
+---@return Vector
 ---@overload fun(Pos: Vector, MinRadius: number, MaxRadius: number)
 ---@overload fun(Pos: Handle, MinRadius: number, MaxRadius: number)
 ---@overload fun(Path: string, Pointeger: integer, MinRadius: number, MaxRadius: number)
@@ -1811,7 +1820,8 @@ function GetPositionNear(Pos, MinRadius, MaxRadius) end
 ---@param Angle number
 function GetCircularPos(Pos, Radius, Angle) end
 
-function GetLocalPlayerTeamNumber() end
+---@return integer
+function GetLocalPlayerTeamNumber() error("This function is provided by the engine.") end
 
 ---@param ODF string
 function DoesODFExist(ODF) end
