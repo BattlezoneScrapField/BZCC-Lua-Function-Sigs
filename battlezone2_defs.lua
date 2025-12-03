@@ -145,7 +145,8 @@ function GetFacingDirection2D(A, B) end
 ---@param X number
 ---@param Y number
 ---@param Z number
-function SetVector(X, Y, Z) end
+---@return Vector
+function SetVector(X, Y, Z) error("This function is provided by the engine.") end
 
 ---@param V Vector
 function IsNullVector(V) end
@@ -1692,18 +1693,21 @@ function Print(string) end
 function PrintConsoleMessage(string) end
 
 ---@param string any
-function CalcCRC(string) end
+---@return integer
+function CalcCRC(string) error("This function is provided by the engine.") end
 
 ---@param Red integer
 ---@param Green integer
 ---@param Blue integer
-function Make_RGB(Red, Green, Blue) end
+---@return integer
+function Make_RGB(Red, Green, Blue) error("This function is provided by the engine.") end
 
 ---@param Red integer
 ---@param Green integer
 ---@param Blue integer
 ---@param Alpha integer
-function Make_RGBA(Red, Green, Blue, Alpha) end
+---@return integer
+function Make_RGBA(Red, Green, Blue, Alpha) error("This function is provided by the engine.") end
 
 ---@param Key string
 ---@overload fun(Prefix: string, Key: string)
