@@ -47,6 +47,26 @@
 ---@field qz number
 ---@field qw number
 
+---@class FactionLoadout
+---@field Model string
+---@field ODF string
+
+---@class Faction
+---@field ID integer
+---@field Char string
+---@field Name string
+---@field FactionLoadouts FactionLoadout[]
+
+---@class Pool
+---@field Handle Handle
+---@field Position Vector
+---@field DistanceFromCPURecycler integer
+
+---@class NeutralBase
+---@field TeamNumber number
+---@field Faction Faction
+---@field SpawnPath string
+
 function InitialSetup() end
 
 function Start() end
@@ -125,7 +145,7 @@ function SetRandomSeed(Seed) end
 
 ---@param Max number
 ---@return number
----@overload fun(Min: number, Max: number)
+---@overload fun(Min: number, Max: number): number
 function GetRandomFloat(Max) error("This function is provided by the engine.") end
 
 ---@param V Vector
@@ -1739,7 +1759,8 @@ function GetTime() error("This function is provided by the engine.") end
 ---@overload fun(h1: Handle, Pos: Matrix)
 ---@overload fun(h1: Handle, Pos: Vector)
 ---@overload fun(h1: Handle, Path: string, Point: integer)
-function GetDistance(h1, h2) end
+---@return integer
+function GetDistance(h1, h2) error("This function is provided by the engine.") end
 
 function GetAiPaths() end
 
@@ -1786,11 +1807,12 @@ function SetGravity(Gravity) end
 function PreloadODF(ODF) end
 
 ---@param Pos Matrix
----@overload fun(Pos: Vector)
----@overload fun(Pos: Handle)
----@overload fun(Pos: string, Point: integer)
----@overload fun(X: number, Z: number)
-function TerrainFindFloor(Pos) end
+---@overload fun(Pos: Vector) : number
+---@overload fun(Pos: Handle) : number
+---@overload fun(Pos: string, Point: integer) : number
+---@overload fun(X: number, Z: number) : number
+---@return number
+function TerrainFindFloor(Pos) error("This function is provided by the engine.") end
 
 ---@param Pos Vector
 ---@overload fun(Pos: Matrix)
@@ -1801,11 +1823,12 @@ function TerrainIsWater(Pos) end
 
 ---@param Pos Vector
 ---@param UseWater boolean false
----@overload fun(Pos: Matrix, UseWater: boolean)
----@overload fun(Pos: Handle, UseWater: boolean)
----@overload fun(Path: string, Point: integer, UseWater: boolean)
----@overload fun(X: number, Z: number)
-function GetTerrainHeightAndNormal(Pos, UseWater) end
+---@overload fun(Pos: Matrix, UseWater: boolean) : number, Vector
+---@overload fun(Pos: Handle, UseWater: boolean) : number, Vector
+---@overload fun(Path: string, Point: integer, UseWater: boolean) : number, Vector
+---@overload fun(X: number, Z: number) : number, Vector
+---@return number, Vector
+function GetTerrainHeightAndNormal(Pos, UseWater) error("This function is provided by the engine.") end
 
 ---@param Path string
 ---@overload fun(h1: Handle, h2: Handle, Radius: number)
@@ -1927,3 +1950,36 @@ function LoadFile(Filename) end
 ---@param Text string
 ---@param Append any
 function WriteToFile(Filename, Text, Append) end
+
+---@param name string
+---@param x number
+---@param z number
+---@return boolean
+function CreatePath(name, x, z) error("This function is provided by the engine.") end
+
+---@param name string
+---@param x number
+---@param z number
+---@return integer, boolean
+function AddPathPoint(name, x, z) error("This function is provided by the engine.") end
+
+---@param oldname string
+---@param newname string
+---@return boolean
+function RenamePath(oldname, newname) error("This function is provided by the engine.") end
+
+---@param name string
+---@return boolean
+function RemovePath(name) error("This function is provided by the engine.") end
+
+---@param name string
+---@param Point integer
+---@return integer, boolean
+function RemovePathPoint(name, Point) error("This function is provided by the engine.") end
+
+---@param name string
+---@param point integer
+---@param x number
+---@param z number
+---@return boolean
+function SetPathPoint(name, point, x, z) error("This function is provided by the engine.") end
